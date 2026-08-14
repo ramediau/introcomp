@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pioneiros da Informática: 20 Gigantes da História</title>
+    
+    <style>
+        /* --- Reset e Estilos Globais --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a; /* Fundo escuro moderno */
+            color: #f1f5f9; /* Texto claro */
+            line-height: 1.6;
+        }
+
+        /* --- Cabeçalho --- */
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- Container Principal --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* --- Grid de Pessoas --- */
+        .pioneers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- Card de Pessoa --- */
+        .pioneer-card {
+            background-color: #1e293b;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pioneer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: #38bdf8;
+        }
+
+        /* --- Container da Imagem --- */
+        .img-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background-color: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pioneer-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+            object-position: top; /* Foca no rosto se a imagem for alta */
+            
+            /* Efeito Histórico: Sépia por padrão, revela cor no hover do card */
+            filter: sepia(0.8) contrast(1.1) brightness(0.9);
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+
+        .pioneer-card:hover .pioneer-img {
+            filter: sepia(0) contrast(1) brightness(1);
+            transform: scale(1.03);
+        }
+
+        /* --- Conteúdo do Texto --- */
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h2 {
+            font-size: 1.5rem;
+            color: #f8fafc;
+            margin-bottom: 5px;
+        }
+
+        .title-tag {
+            display: inline-block;
+            background-color: #312e81;
+            color: #a5b4fc;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bio-text {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .wiki-link {
+            display: inline-block;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .wiki-link:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
+        }
+
+        /* --- Rodapé --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #334155;
+            background-color: #0f172a;
+        }
+
+        footer p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* --- Responsividade --- */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .img-container {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Pioneiros da Informática</h1>
+        <p>Conheça 20 figuras fundamentais cujas visões e invenções construíram o mundo digital que habitamos hoje.</p>
+    </header>
+
+    <main class="container">
+        <div class="pioneers-grid" id="pioneersGrid"></div>
+    </main>
+
+    <footer>
+        <p>&copy; História da Computação - Gerado como exemplo técnico. Imagens via Wikimedia Commons.</p>
+    </footer>
+
+    <script>
+        // --- Dados das 20 Pessoas Históricas ---
+        // As URLs das imagens apontam diretamente para arquivos da Wikimedia Commons/Wikipedia.
+        const pioneersData = [
+            {
+                name: "Ada Lovelace",
+                title: "A Primeira Programadora",
+                bio: "Matemática britânica que escreveu o primeiro algoritmo destinado a ser processado por uma máquina (a Máquina Analítica de Babbage), sendo considerada a primeira programadora da história.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Ada_Lovelace_portrait.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Ada_Lovelace"
+            },
+            {
+                name: "Charles Babbage",
+                title: "Pai da Computação Mecânica",
+                bio: "Cientista e inventor que projetou a 'Máquina Diferencial' e a 'Máquina Analítica', os primeiros conceitos de computadores mecânicos programáveis de propósito geral.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Charles_Babbage_-_1860.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Charles_Babbage"
+            },
+            {
+                name: "Alan Turing",
+                title: "Pai da Ciência da Computação",
+                bio: "Matemático que formalizou os conceitos de algoritmo e computação com a 'Máquina de Turing'. Decisivo na quebra de códigos nazistas na 2ª Guerra e pioneiro em Inteligência Artificial.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Alan_Turing"
+            },
+            {
+                name: "Grace Hopper",
+                title: "Vovó do COBOL",
+                bio: "Almirante da Marinha dos EUA e cientista que criou o primeiro compilador, permitindo programar em linguagens próximas ao inglês. Sua obra foi fundamental para o desenvolvimento da linguagem COBOL.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28uncovered%29.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Grace_Hopper"
+            },
+            {
+                name: "John von Neumann",
+                title: "Arquiteto da Computação Moderna",
+                bio: "Matemático que descreveu a 'Arquitetura de von Neumann', o design fundamental usado na maioria dos computadores até hoje, onde dados e programas são armazenados na mesma memória.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/5/5e/JohnvonNeumann-LosAlamos.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/John_von_Neumann"
+            },
+            {
+                name: "Konrad Zuse",
+                title: "Criador do Primeiro Computador Programável",
+                bio: "Engenheiro alemão que construiu o Z3 (1941), considerado o primeiro computador eletromecânico do mundo totalmente funcional, controlado por programa e baseado no sistema binário.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Konrad_Zuse_%281992%29.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Konrad_Zuse"
+            },
+            {
+                name: "Claude Shannon",
+                title: "Pai da Teoria da Informação",
+                bio: "Matemático e engenheiro que fundou a Teoria da Informação, demonstrando como circuitos lógicos booleanos (ON/OFF) poderiam realizar operações matemáticas complexas usando dígitos binários (bits).",
+                image: "https://upload.wikimedia.org/wikipedia/commons/9/99/ClaudeShannon_MFO3807.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Claude_Shannon"
+            },
+            {
+                name: "Dennis Ritchie",
+                title: "Criador da Linguagem C e Unix",
+                bio: "Cientista da computação que criou a linguagem de programação C e foi co-criador do sistema operacional Unix nos Laboratórios Bell. C é a base de muitos sistemas e linguagens modernas.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/2/23/Dennis_Ritchie_2011.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Dennis_Ritchie"
+            },
+            {
+                name: "Ken Thompson",
+                title: "Co-criador do Unix e Linguagem Go",
+                bio: "Trabalhou com Ritchie nos Laboratórios Bell, projetando e implementando o sistema Unix original. Criou a linguagem B (precursora da C) e, mais tarde, co-criou a linguagem Go no Google.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Ken_Thompson_%28Heidelberg_Laureate_Forum%29.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Ken_Thompson"
+            },
+            {
+                name: "Linus Torvalds",
+                title: "Criador do Linux e Git",
+                bio: "Engenheiro de software que desenvolveu o kernel Linux inicial como um estudante. Também criou o sistema de controle de versão Git, essencial para o desenvolvimento de software colaborativo moderno.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/0/01/LinuxCon_Europe_Linus_Torvalds_03.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Linus_Torvalds"
+            },
+            {
+                name: "Tim Berners-Lee",
+                title: "Criador da World Wide Web",
+                bio: "Físico e cientista da computação que inventou a World Wide Web (WWW) no CERN, desenvolvendo o HTML, HTTP e o sistema de URLs, conectando documentos em uma rede global.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Sir_Tim_Berners-Lee_%28cropped%29.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Tim_Berners-Lee"
+            },
+            {
+                name: "Steve Jobs",
+                title: "Co-fundador da Apple e Visionário",
+                bio: "Empreendedor que co-fundou a Apple. Foi fundamental na popularização do computador pessoal (Apple II, Macintosh), da interface gráfica e na revolução dos smartphones com o iPhone.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/d/dc/Steve_Jobs_Headshot_2010-CROP.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Steve_Jobs"
+            },
+            {
+                name: "Bill Gates",
+                title: "Co-fundador da Microsoft",
+                bio: "Empreendedor e programador que co-fundou a Microsoft, tornando o sistema operacional Windows o padrão global para computadores pessoais e impulsionando a era do software.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Bill_Gates_2017_%28cropped%29.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Bill_Gates"
+            },
+            {
+                name: "Steve Wozniak",
+                title: "Co-fundador da Apple e Engenheiro",
+                bio: "Engenheiro eletrônico que projetou e construiu sozinho os computadores Apple I e Apple II, que foram marcos cruciais no início da revolução dos computadores pessoais.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Steve_Wozniak_by_Gage_Skidmore.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Steve_Wozniak"
+            },
+            {
+                name: "Douglas Engelbart",
+                title: "Inventor do Mouse e Interface",
+                bio: "Cientista pioneiro que inventou o mouse de computador e demonstrou tecnologias revolucionárias como hipertexto, janelas múltiplas e videoconferência já em 1968.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/7/78/Douglas_Engelbart_in_2008.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Douglas_Engelbart"
+            },
+            {
+                name: "Vint Cerf",
+                title: "Co-Pai da Internet (TCP/IP)",
+                bio: "Engenheiro que co-projetou os protocolos TCP/IP, a arquitetura fundamental de rede que permite que computadores em todo o mundo comuniquem entre si, formando a Internet.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/7/7f/Vint_Cerf_2010.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Vint_Cerf"
+            },
+            {
+                name: "Alan Kay",
+                title: "Pioneiro da Interface Gráfica e POO",
+                bio: "Cientista da computação que liderou o desenvolvimento do conceito de Interface Gráfica do Usuário (GUI) moderna e da linguagem Smalltalk, pioneira na Programação Orientada a Objetos.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Alan_Kay_%28cropped%29.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Alan_Kay"
+            },
+            {
+                name: "Margaret Hamilton",
+                title: "Pioneira da Engenharia de Software",
+                bio: "Cientista que liderou a equipe do MIT que desenvolveu o software de navegação para as missões Apollo da NASA. Cunhou o termo 'Engenharia de Software' e priorizou a robustez e detecção de erros.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/d/db/Margaret_Hamilton_-_restoration.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Margaret_Hamilton_%28cientista%29"
+            },
+            {
+                name: "Richard Stallman",
+                title: "Fundador do Movimento Software Livre",
+                bio: "Programador e ativista que lançou o Projeto GNU e fundou a Free Software Foundation. Criou a licença GPL, estabelecendo os princípios legais e filosóficos do Software Livre.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/2/28/Richard_Stallman_at_I_Love_Free_Software_Day_2019_in_Madrid_%28cropped%29.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Richard_Stallman"
+            },
+            {
+                name: "Guido van Rossum",
+                title: "Criador da Linguagem Python",
+                bio: "Programador holandês que criou a linguagem de programação Python, focada na legibilidade do código e produtividade do programador, tornando-se uma das mais populares do mundo hoje.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/6/66/Guido_van_Rossum_OSCON_2006.jpg",
+                wiki: "https://pt.wikipedia.org/wiki/Guido_van_Rossum"
+            }
+        ];
+
+        // --- Função para Gerar os Cards no HTML ---
+        function generatePioneerCards() {
+            const grid = document.getElementById('pioneersGrid');
+            
+            pioneersData.forEach(pioneer => {
+                // Cria o elemento do card
+                const card = document.createElement('div');
+                card.className = 'pioneer-card';
+
+                // Estrutura interna do card usando Template Literals
+                card.innerHTML = `
+                    <div class="img-container">
+                        <img src="${pioneer.image}" alt="Foto de ${pioneer.name}" class="pioneer-img" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h2>${pioneer.name}</h2>
+                        <span class="title-tag">${pioneer.title}</span>
+                        <p class="bio-text">${pioneer.bio}</p>
+                        <a href="${pioneer.wiki}" target="_blank" class="wiki-link">Saiba mais na Wikipedia &rarr;</a>
+                    </div>
+                `;
+
+                // Adiciona o card ao grid
+                grid.appendChild(card);
+            });
+        }
+
+        // Executa a função quando a página carregar
+        window.onload = generatePioneerCards;
+    </script>
+</body>
+</html>
